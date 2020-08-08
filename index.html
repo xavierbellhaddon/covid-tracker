@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+
+    <div class="heading">
+        <h1>UNITED STATES COVID-19 TRACKER</h1>
+    </div>
+    <div class="container">
+        <form class="form">
+            <legend>We've used your IP address to guess your state. If we got it wrong, enter the correct state in the
+                field below, then submit the form for statewide COVID-19 statistics. The form is case-insensitive and accepts
+                both abbreviations and state names.</legend><br>
+            <div class="form-input">
+                <input type="text" autocomplete="off" class="region" id="region">
+                <input type="submit" value="Submit" class="submit">
+            </div>
+            <p class="error red-text"></p>
+        </form>
+        <br>
+
+
+
+        <div class="results">
+            <p class="results-text positive"></p>
+            <p class="results-text negative"></p>
+            <p class="results-text dead"></p>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
