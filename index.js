@@ -13,20 +13,20 @@ const regionArr = [
 let regionCode;
 
 
-function getRegionByIP() {
-    let req = new XMLHttpRequest;
-    req.open("GET", "http://ip-api.com/json/");
-    req.send();
-    req.onload = function () {
-        let json = JSON.parse(req.responseText);
-        regionCode = json.region;
-        if (inUSA(regionCode)) {
-            textInput.value = json.regionName;
-        } else {
-            regionCode = null;
-        }
-    }
-}
+//function getRegionByIP() {
+//    let req = new XMLHttpRequest;
+//    req.open("GET", "http://ip-api.com/json/");
+//    req.send();
+//    req.onload = function () {
+//        let json = JSON.parse(req.responseText);
+//        regionCode = json.region;
+//        if (inUSA(regionCode)) {
+//            textInput.value = json.regionName;
+//        } else {
+//            regionCode = null;
+//        }
+//    }
+//}
 
 
 function changeRegion(val) {
@@ -99,9 +99,7 @@ function throwError() {
 }
 
 
-getRegionByIP()
-
-
+//getRegionByIP()
 
 
 document.querySelector(".form").addEventListener("submit", function () {
