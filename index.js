@@ -9,24 +9,82 @@ const regionArr = [
     'WY'
 ];
 
+const regionObj = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY',
+};
 
-let regionCode;
+
+let regionCode = null;
+let regionName;
 
 
-//function getRegionByIP() {
-//    let req = new XMLHttpRequest;
-//    req.open("GET", "http://ip-api.com/json/");
-//    req.send();
-//    req.onload = function () {
-//        let json = JSON.parse(req.responseText);
-//        regionCode = json.region;
-//        if (inUSA(regionCode)) {
-//            textInput.value = json.regionName;
-//        } else {
-//            regionCode = null;
-//        }
-//    }
-//}
+function getRegionByIP() {
+    let req = new XMLHttpRequest;
+    req.open("GET", "https://api.ipgeolocation.io/ipgeo?apiKey=cc749e5a00904e29a551bdb1bea6390b");
+    req.send();
+    req.onload = function () {
+        let json = JSON.parse(req.responseText);
+        regionName = json.state_prov
+        regionCode = regionObj[regionName];
+        console.log(regionCode, regionName)
+        if (inUSA(regionName)) {
+            textInput.value = regionName;
+            console.log("true")
+        } else {
+            regionName = null
+            regionCode = null;
+        }
+    }
+}
 
 
 function changeRegion(val) {
@@ -38,17 +96,20 @@ function changeRegion(val) {
         for (let i = 0; i < json.length; i++) {
             if (val.toUpperCase() === json[i].name.toUpperCase()) {
                 regionCode = json[i].state;
+                regionName = json[i].name;
+                textInput.value = regionName;
                 return
             } else if (val.toUpperCase() === json[i].state) {
                 regionCode = json[i].state;
-                textInput.value = json[i].name;
+                regionName = json[i].name;
+                textInput.value = regionName;
                 return
-            }
-            else {
+            } else {
                 regionCode = null;
+                regionName = null;
             }
         }
-        
+
     }
 }
 
@@ -80,11 +141,11 @@ function getData(val) {
 }
 
 function inUSA(val) {
-    for (let i = 0; i <= regionArr.length; i++) {
-        if (val === regionArr[i]) {
+    if (regionObj[val]) {
+    
             return true
         }
-    }
+    
 }
 
 function formatNumber(val) {
@@ -99,19 +160,20 @@ function throwError() {
 }
 
 
-//getRegionByIP()
+getRegionByIP()
 
 
 document.querySelector(".form").addEventListener("submit", function () {
     event.preventDefault();
     getData(regionCode);
+    console.log(regionCode, regionName)
     if (regionCode === null) {
         throwError();
     } else {
         document.querySelector(".error").style.display = "none";
         results.style.display = "block";
     }
-    
+
 });
 
 // make sure all formats of Washington DC are accepted 
