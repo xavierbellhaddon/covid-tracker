@@ -1,14 +1,5 @@
 const results = document.querySelector(".results");
 const textInput = document.querySelector(".region");
-const regionArr = [
-    'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL',
-    'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA',
-    'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE',
-    'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI',
-    'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV',
-    'WY'
-];
-
 const regionObj = {
     'Alabama': 'AL',
     'Alaska': 'AK',
@@ -75,10 +66,8 @@ function getRegionByIP() {
         let json = JSON.parse(req.responseText);
         regionName = json.state_prov
         regionCode = regionObj[regionName];
-        console.log(regionCode, regionName)
         if (inUSA(regionName)) {
             textInput.value = regionName;
-            console.log("true")
         } else {
             regionName = null
             regionCode = null;
@@ -119,11 +108,6 @@ textInput.onchange = function () {
 }
 
 
-//function getDateChecked(val) {
-//    console.log(val.date)
-//}
-
-
 function getData(val) {
     let req = new XMLHttpRequest;
     req.open("GET", "https://covidtracking.com/api/states/");
@@ -142,10 +126,10 @@ function getData(val) {
 
 function inUSA(val) {
     if (regionObj[val]) {
-    
-            return true
-        }
-    
+
+        return true
+    }
+
 }
 
 function formatNumber(val) {
@@ -166,7 +150,6 @@ getRegionByIP()
 document.querySelector(".form").addEventListener("submit", function () {
     event.preventDefault();
     getData(regionCode);
-    console.log(regionCode, regionName)
     if (regionCode === null) {
         throwError();
     } else {
